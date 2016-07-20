@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>clock</title>
+    <style>
+        canvas {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #e3e3e3;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("canvas");
+    var cxt = canvas.getContext("2d");
+    cxt.translate(250, 250);
+    //    表盘装饰
+    var timer = setInterval(function () {
+        auto();
+    }, 1000);
+
+    cxt.save();
+    
+    function auto() {
+        cxt.clearRect(-250,-250,500,500);
+        cxt.beginPath();
+        cxt.fillStyle = "skyblue";
+        cxt.arc(0, 0, 220, 0, 2 * Math.PI, true);
+        cxt.fill();
+        cxt.beginPath();
+        cxt.fillStyle = "#fff";
+        cxt.arc(0, 0, 200, 0, 2 * Math.PI, true);
+        cxt.fill();
+
+        //    表盘刻度
+        for (var i = 0; i < 12; i++) {
+            cxt.beginPath();
+            cxt.rotate(Math.PI / 6);
+            cxt.fillStyle = "#90f";
+            cxt.arc(180, 0, 5, 0, 2 * Math.PI, true);
+            cxt.fill();
+        }
+        for (var j = 0; j < 60; j++) {
+            cxt.beginPath();
+            cxt.rotate(Math.PI / 30);
+            cxt.fillStyle = "#c778fc";
+            cxt.arc(180, 0, 2, 0, 2 * Math.PI, true);
+            cxt.fill();
+        }
+//        cxt.save();
+        cxt.beginPath();
+        cxt.fillStyle = "#666";
+        cxt.arc(0, 0, 5, 0, 2 * Math.PI, true);
+        cxt.fill();
+        //时间显示
+        var oDate = new Date();
+        var oHour = oDate.getHours();
+        var oMinute = oDate.getMinutes();
+        var oSenond = oDate.getSeconds();
+        var oMonth = oDate.getMonth()+1;
+        var oDay = oDate.getDate();
+        oMonth = dbtime(oMonth);
+        oDay = dbtime(oDay);
+        console.log(oMonth+"--"+oDay)
+        cxt.strokeRect(50,-10,75,20);
+        cxt.strokeStyle="skyblue";
+        cxt.font="14px 微软雅黑";
+        cxt.strokeText(oMonth+"月"+oDay+"日",55,5);
+        oHour = oHour>=12 ? oHour-12 : oHour;
+        //时针
+        cxt.save();
+        cxt.rotate(-Math.PI / 2);
+        
+
+
+        cxt.beginPath();
+        cxt.fillStyle = "#666";
+        //    cxt.arc(-30,0,6,0,Math.PI*2,true);
+        cxt.fill();
+        cxt.beginPath();
+        cxt.rotate((oHour + oMinute / 60 + oSenond / 3600) * (Math.PI / 6));
+        cxt.moveTo(-27, 0);
+        cxt.bezierCurveTo(30, -8, 60, -8, 80, 0);
+        cxt.bezierCurveTo(60, 8, 30, 8, -27, 0);
+        cxt.fill();
+        cxt.restore();
+        //分针
+        cxt.save();
+        cxt.beginPath();
+        cxt.rotate(-Math.PI / 2);
+        cxt.fillStyle = "#666";
+        //    cxt.arc(-30,0,6,0,Math.PI*2,true);
+        cxt.fill();
+        cxt.beginPath();
+        cxt.rotate(Math.PI / 30 * oMinute);
+        cxt.moveTo(-27, 0);
+        cxt.bezierCurveTo(30, -5, 60, -5, 145, 0);
+        cxt.bezierCurveTo(60, 5, 30, 5, -27, 0);
+        cxt.fill();
+        //秒针
+        cxt.restore();
+        cxt.save();
+        cxt.beginPath();
+        cxt.rotate(-Math.PI / 2);
+        cxt.rotate(Math.PI / 30 * oSenond);
+        cxt.strokeStyle = "#777";
+        cxt.fillStyle = "#777";
+        cxt.lineWidth = 2;
+        cxt.arc(-30, 0, 4, 0, Math.PI * 2, true);
+        cxt.fill();
+        cxt.beginPath();
+        cxt.moveTo(-27, 0);
+        cxt.lineTo(165, 0);
+        cxt.stroke();
+        cxt.restore();
+//        cxt.restore();
+    }
+    function dbtime(num) {
+                return num > 9 ? num : "0" + num;
+            }
+</script>
+
+</html>
