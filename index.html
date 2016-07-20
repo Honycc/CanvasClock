@@ -13,7 +13,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, 50%);
+            transform: translate(-50%, 5%);
             border: 1px solid #e3e3e3;
         }
     </style>
@@ -66,7 +66,6 @@
             cxt.arc(180, 0, 2, 0, 2 * Math.PI, true);
             cxt.fill();
         }
-//        cxt.save();
         cxt.beginPath();
         cxt.fillStyle = "#666";
         cxt.arc(0, 0, 5, 0, 2 * Math.PI, true);
@@ -94,7 +93,6 @@
 
         cxt.beginPath();
         cxt.fillStyle = "#666";
-        //    cxt.arc(-30,0,6,0,Math.PI*2,true);
         cxt.fill();
         cxt.beginPath();
         cxt.rotate((oHour + oMinute / 60 + oSenond / 3600) * (Math.PI / 6));
@@ -108,7 +106,6 @@
         cxt.beginPath();
         cxt.rotate(-Math.PI / 2);
         cxt.fillStyle = "#666";
-        //    cxt.arc(-30,0,6,0,Math.PI*2,true);
         cxt.fill();
         cxt.beginPath();
         cxt.rotate(Math.PI / 30 * oMinute);
@@ -132,7 +129,6 @@
         cxt.lineTo(165, 0);
         cxt.stroke();
         cxt.restore();
-//        cxt.restore();
     }
     function dbtime(num) {
                 return num > 9 ? num : "0" + num;
